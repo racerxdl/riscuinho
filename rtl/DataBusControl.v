@@ -11,13 +11,14 @@ module DataBusControl (
    input      [31:0]           addr_in, addr_out,
 	
    input      [31:0]				 data_in, 
-   output     [31:0] 			 data_out
+   output     [31:0] 			 data_out,
+
+   inout      [31:0]                 ext_data
 );
 
 
 wire [31:0] local_data_out;
 
-reg local_busy;
 reg local_rst;
 
 reg [31:0] memory [0:`DBC_RAM_SIZE];
@@ -25,6 +26,9 @@ reg [31:0] dbc_register;
 
 wire ram_addr_out = addr_out >= `DBC_RAM_START && addr_out <= `DBC_RAM_END; 
 wire ram_addr_in  = addr_in  >= `DBC_RAM_START && addr_in  <= `DBC_RAM_END;
+
+wire ext_addr_out = wd && addr_out  == `DBC_GPIO_TANG_NANO;
+wire ext_addr_in  = rd && addr_in   == `DBC_GPIO_TANG_NANO;
 
 wire dbc_register_addrs = addr_out >= `DBC_REGISTER_START && addr_out <= `DBC_REGISTER_END;
 
@@ -42,6 +46,7 @@ assign data_out = dbc_register_addrs                                    ? // end
 						
                    32'b1                                   :  // default para registradores dbc 
 
+                    ext_addr_out ? ext_data                :
 						local_data_out                                       ;  // outro dado endereçado
 
 always @(posedge clk ) begin
@@ -68,7 +73,6 @@ end
 initial begin
    local_rst <= 1'bx;
    busy <= 1'bx;
-   local_busy <= 1'bx;
    ready <= 1'b1;
 end
 
@@ -76,7 +80,7 @@ always @(*) begin
 // busy não é usado exernamente ainda.
 //     busy <= local_busy;
       busy <=1'b0;
-     dbc_register[`DBC_REGISTER_BUS_BUSY_START_BIT] <= local_busy;
+//     dbc_register[`DBC_REGISTER_BUS_BUSY_START_BIT] <= local_busy;
 end
 
 always @(posedge clk) begin
@@ -85,36 +89,15 @@ always @(posedge clk) begin
       $display("Memoria out 0h%08h => 0h%08h", addr_out, memory[addr_out]);
       $display("Registradores: %b",dbc_register_addrs);
    end
-  if(!rst && local_busy === 1'bx )begin
+  if(!rst)begin
       ready <= 1'b1;
-      local_busy <= 1'b1;
-   end
-   else if(!rst && ready && local_busy)begin
-      local_busy <= 1'b0;
    end
 end
 
 
 always @(posedge clk) begin
-   if(!rst && ready && !local_busy && ram_addr_in)begin
- /*
-      if (rd) begin
-         busy <= 1'b1;
-         case (size_out)
-            2'b00:begin
-               local_data_out <= {24'b0, memory[addr_out][ 8:0]};
-            end
-            2'b01: begin
-               local_data_out <= {16'b0, memory[addr_out][15:0]};
-            end
-            2'b10: begin
-               local_data_out <= memory[addr_out]; 
-            end
-         endcase
-      end
- */
+   if(!rst && ready && ram_addr_in)begin
       if(wd) begin
-         local_busy <= 1'b1;
          case (size_in)
             2'b10: // 32bits
                memory[addr_in] <= data_in;
@@ -126,6 +109,5 @@ always @(posedge clk) begin
          $display("Memoria in 0h%08h <= 0h%08h", addr_in, memory[addr_in]);
       end
    end
-
 end
 endmodule

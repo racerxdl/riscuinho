@@ -4,6 +4,11 @@
 `define DBC_RAM_SIZE											512
 `define DBC_RAM_ADDR_WIDTH                         9
 
+/**
+ * Barramento TangNano
+ */
+`define DBC_GPIO_TANG_NANO                              8'h01010001
+
 /*
 https://github.com/DuinOS/riscuinho/wiki/DataBusControlRegister
 32 BITS (UMA WORD)
