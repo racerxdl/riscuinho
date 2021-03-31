@@ -1,0 +1,46 @@
+Fri Mar 26 21:15:00 ART 2021
+Trace back: can't read "itk_component(3)": no such element in array
+    while executing
+"$itk_component($node) IsDrag"
+    (object "::.main_pane.watch.interior.cs.body.m" method "::vsimwidgets::Monitor::_B1ItemRelease" body line 4)
+    invoked from within
+"_B1ItemRelease "" $X $Y"
+    (object "::.main_pane.watch.interior.cs.body.m" method "::vsimwidgets::Monitor::_B1Release" body line 25)
+    invoked from within
+"::.main_pane.watch.interior.cs.body.m _B1Release 144 210"
+    (in namespace inscope "::vsimwidgets::Monitor" script line 1)
+    invoked from within
+"namespace inscope ::vsimwidgets::Monitor {::.main_pane.watch.interior.cs.body.m _B1Release 144 210}"
+    (command bound to event)
+  <2:C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/tk8.6/bgerror.tcl:106: ::tkerror {can't read "itk_component(3)": no such element in array}
+  <1:eval:1: ::tk::dialog::error::bgerror {can't read "itk_component(3)": no such element in array}
+Sat Mar 27 19:47:48 ART 2021
+Trace back: Bad sequence in.main_pane.watch.interior.cs.body.m.lwchildsite.clipper.canvas.2.h.lwchildsite.clipper.canvas.sfchildsite.tree, aborting query. (2)
+    while executing
+"$itk_component(tree) insertquery end """
+    (object "::.main_pane.watch.interior.cs.body.m.lwchildsite.clipper.canvas.2.h" method "::vsimwidgets::Hierarchy::requery" body line 3)
+    invoked from within
+"$itk_component(values) requery"
+    (object "::.main_pane.watch.interior.cs.body.m.lwchildsite.clipper.canvas.2" method "::vsimwidgets::MonitorNode::updateNode" body line 54)
+    invoked from within
+"updateNode"
+    (object "::.main_pane.watch.interior.cs.body.m.lwchildsite.clipper.canvas.2" method "::vsimwidgets::MonitorNode::display_name" body line 14)
+    invoked from within
+"$itk_component($node) display_name $new"
+    (object "::.main_pane.watch.interior.cs.body.m" method "::vsimwidgets::Monitor::disp_name" body line 1)
+    invoked from within
+"$wname.m disp_name [lindex $item_list 0] $propsig_label"
+    (procedure "MonitorWin::ApplyPropSig" line 8)
+    invoked from within
+"MonitorWin::ApplyPropSig .main_pane.watch.interior.cs.body"
+    invoked from within
+".nodeprop.bb.button0 invoke"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel #0 [list $w invoke]"
+    (procedure "tk::ButtonUp" line 24)
+    invoked from within
+"tk::ButtonUp .nodeprop.bb.button0"
+    (command bound to event)
+  <2:C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/tk8.6/bgerror.tcl:106: ::tkerror {Bad sequence in.main_pane.watch.interior.cs.body.m.lwchildsite.clipper.canvas.2.h.lwchildsite.clipper.canvas.sfchildsite.tree, aborting query. (2)}
+  <1:eval:1: ::tk::dialog::error::bgerror {Bad sequence in.main_pane.watch.interior.cs.body.m.lwchildsite.clipper.canvas.2.h.lwchildsite.clipper.canvas.sfchildsite.tree, aborting query. (2)}
